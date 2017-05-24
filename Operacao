@@ -1,0 +1,27 @@
+package Conta;
+
+import java.util.Date;
+
+public class Operacao extends Registro {
+
+    public Operacao(int N) {
+        super(N);
+    }
+
+    public void novoDeposito(int N){
+        this.saldo += N;
+    }
+    public void novoSaque(int N){
+        if (saldo <= N)
+        {
+            System.out.println("Sua conta não possui montante suficiente para o saque!");
+        }
+        else {
+            this.saldo -= N;
+        }
+    }
+
+    public void consulta(){
+        System.out.println("Saldo Atual:" + saldo);
+    }
+}
