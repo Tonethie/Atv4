@@ -1,0 +1,37 @@
+package Conta;
+
+import java.util.Date;
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String args[]) {
+        Scanner in = new Scanner(System.in);
+        Operacao o = new Operacao(10000);
+        int x;
+        int tipo;
+        do {
+            System.out.println("*1)Saque                       *");
+            System.out.println("*2)Deposito                    *");
+            System.out.println("*3)Consulta                    *");
+            tipo = in.nextInt();
+
+            switch (tipo) {
+                case 1:
+                    System.out.println("Qual o valor do saque?");
+                    x = in.nextInt();
+                    o.novoSaque(x);
+                    break;
+                case 2:
+                    System.out.println("Qual o valor do deposito?");
+                    x = in.nextInt();
+                    o.novoDeposito(x);
+                    break;
+                case 3:
+                    System.out.println("Consultando...");
+                    o.consulta();
+                    break;
+            }
+        } while (tipo != 4) ;
+    }
+}
