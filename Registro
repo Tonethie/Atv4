@@ -1,25 +1,90 @@
-package Conta;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
 
 public class Registro {
-
-    int saldo;
-    String data;
-    String listaDeRegistros;
-
-    public Registro (int N){
-        int valorModificado = N;
+    private List<Operacao> listaDeRegistros;
+    int montanteTotal;
+    int tipodois, senha;
+    Scanner x = new Scanner(System.in);
+    Verificacao verifica = new Verificacao();
+    public Registro() {
+        this.listaDeRegistros = new ArrayList<>();
+        montanteTotal = 0;
     }
 
+    public Registro(int montanteTotal) {
+        this.listaDeRegistros = new ArrayList<>();
+        this.montanteTotal = montanteTotal;
+    }
 
-    public void gravaRegistro(int N){
+    public List<Operacao> getListaDeRegistros() {
+        return listaDeRegistros;
+    }
+
+    public int getMontanteTotal() {
+        return montanteTotal;
+    }
+
+    private void addOperacao(Operacao novaOperacao)
+    {
+        this.getListaDeRegistros().add(novaOperacao);
 
     }
 
-    ArrayList<Operacao> x = new ArrayList<Operacao>();
+    public void novoSaque(Operacao novaOperacao)
+    {
+        addOperacao(novaOperacao);
+        this.montanteTotal -= novaOperacao.getMontante();
+    }
 
+    public void novoDeposito(Operacao novaOperacao)
+    {
+        addOperacao(novaOperacao);
+        this.montanteTotal += novaOperacao.getMontante();
+    }
+
+    public void Pagamento(Operacao novaOperacao)
+    {
+        do
+        {
+            System.out.println("Como deseja fazer o pagamento:");
+            System.out.println("1)Débito");
+            System.out.println("2)Cheque");
+            System.out.println("3)Sair");
+            tipodois = x.nextInt();
+            switch (tipodois){
+                case 1:
+                    System.out.println("Digite a senha do seu cartão:");
+                    senha = x.nextInt();
+                    if( senha != verifica.getSenhaCartao())
+                    {
+                        System.out.println("Senha Incorreta!");
+                    } else {
+                        addOperacao(novaOperacao);
+                        System.out.println("Pagamento realizado!");
+                        this.montanteTotal -= novaOperacao.getMontante();
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+        }while(tipodois!=3);
+    }
+
+    String getTodosOsRegistrosEmFormaDeLista()
+    {
+        String todosOsRegistro = "";
+        String header1 = " ---- Lista de Todos os Registro ----\n";
+        String header2 = "   data   -   valor movimentado\n";
+        todosOsRegistro += header1 + header2;
+        for(Operacao op : this.getListaDeRegistros())
+        {
+            todosOsRegistro += op.data + "  -     " + op.monstante + " Reais\n";
+        }
+        return todosOsRegistro;
+    }
 }
