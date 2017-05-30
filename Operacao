@@ -1,27 +1,39 @@
-package Conta;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Scanner;
 
-public class Operacao extends Registro {
-
-    public Operacao(int N) {
-        super(N);
+public class Operacao {
+    int monstante;
+    String data;
+    Scanner in = new Scanner(System.in);
+    GregorianCalendar data1;
+    public Operacao(int montante) {
+        perguntaData();
+        this.monstante = montante;
+        this.data = new SimpleDateFormat("yyyy/MM/dd").format(data1.getTime());
+    }
+    public void perguntaData(){
+        int dia, mes, ano;
+        System.out.println("Diga dia :\n");
+        Scanner scanner = new Scanner(System.in);
+        dia = scanner.nextInt();
+        System.out.println("Diga mes :\n");
+        scanner = new Scanner(System.in);
+        mes = scanner.nextInt();
+        System.out.println("Diga ano :\n");
+        scanner = new Scanner(System.in);
+        ano = scanner.nextInt();
+        this.data1 = new GregorianCalendar(ano,mes-1,dia);
+    }
+    public String getData(){
+        return data;
     }
 
-    public void novoDeposito(int N){
-        this.saldo += N;
-    }
-    public void novoSaque(int N){
-        if (saldo <= N)
-        {
-            System.out.println("Sua conta não possui montante suficiente para o saque!");
-        }
-        else {
-            this.saldo -= N;
-        }
+    public int getMontante() {
+        return monstante;
     }
 
-    public void consulta(){
-        System.out.println("Saldo Atual:" + saldo);
-    }
 }
