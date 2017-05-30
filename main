@@ -1,37 +1,65 @@
-package Conta;
-
-import java.util.Date;
 import java.util.Scanner;
+// eberspac@gmail.com1
 
 public class Main {
-
-    public static void main(String args[]) {
-        Scanner in = new Scanner(System.in);
-        Operacao o = new Operacao(10000);
-        int x;
+    public static void main(String[] args) {
+        Registro registroPrincipal = new Registro();
+        int montante=0;
         int tipo;
-        do {
-            System.out.println("*1)Saque                       *");
-            System.out.println("*2)Deposito                    *");
-            System.out.println("*3)Consulta                    *");
+        Scanner in = new Scanner(System.in);
+//        montante = 20;
+        do
+        {
+            System.out.println("*****Bem vindo ao Banco ABC*****");
+            System.out.println("*O que deseja fazer:           *");
+            System.out.println("1> Realizar um Deposito        *");
+            if ( registroPrincipal.montanteTotal > 0 ) {
+                System.out.println("2> Realizar um Saque           *");
+            }
+            System.out.println("3> Solicitar um Extrato        *");
+            if ( registroPrincipal.montanteTotal > 0 ) {
+                System.out.println("4> Realizar um Pagamento       *");
+            }
+            System.out.println("5> Sair                        *\n");
             tipo = in.nextInt();
-
-            switch (tipo) {
+            switch(tipo)
+            {
                 case 1:
-                    System.out.println("Qual o valor do saque?");
-                    x = in.nextInt();
-                    o.novoSaque(x);
+                    System.out.println("Quanto deseja depositar? \n");
+                    montante = in.nextInt();
+                    registroPrincipal.novoDeposito(new Operacao(montante)); // aqui ele pergunta o dia
+                    System.out.println("Seu saldo é de: " + registroPrincipal.getMontanteTotal());
                     break;
                 case 2:
-                    System.out.println("Qual o valor do deposito?");
-                    x = in.nextInt();
-                    o.novoDeposito(x);
+                    System.out.println("Quanto deseja sacar? \n");
+                    montante = in.nextInt();
+                    if( montante > registroPrincipal.montanteTotal){
+                        System.out.println("Saldo Insuficiente!");
+                    } else {
+                        registroPrincipal.novoSaque(new Operacao(montante));
+                        System.out.println("Seu saldo é de: " + registroPrincipal.getMontanteTotal());
+                    }
                     break;
                 case 3:
-                    System.out.println("Consultando...");
-                    o.consulta();
+                    System.out.println(registroPrincipal.getTodosOsRegistrosEmFormaDeLista());
+                    System.out.println("Seu saldo é de: " + registroPrincipal.getMontanteTotal());
+                    break;
+                case 4:
+                    System.out.println("Qual o valor do pagamento?");
+                    montante = in.nextInt();
+                    if( montante > registroPrincipal.montanteTotal){
+                        System.out.println("Saldo Insuficiente!");
+                    } else {
+                        registroPrincipal.Pagamento(new Operacao(montante));
+                    }
+                    break;
+                case 5:
+                    System.out.println("Sistema Encerrado!");
                     break;
             }
-        } while (tipo != 4) ;
+
+        }while (tipo!=5);
+
+
     }
 }
